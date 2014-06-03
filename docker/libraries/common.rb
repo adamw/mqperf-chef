@@ -8,12 +8,18 @@ def pull_image(name, image)
   	end
 end
 
-def run(name, image, params)
+def run(name, image, cmdline, env)
+  envs = env.map { |k, v|
+    "-e #{k}=#{v}"
+  }.join(" ")
+
+  log "Docker environment: #{envs}"
+
 	script "run_app_#{name}_container" do
     	interpreter "bash"
     	user "root"
     	code <<-EOH
-    		docker run -d --name=#{name} #{image} #{params.join(" ")}
+    		docker run -d --name=#{name} #{envs} #{image} #{cmdline.join(" ")}
     	EOH
   	end
 end
@@ -22,5 +28,5 @@ def pull_and_run_app(name)
 	data = node[name]
 	image = data[:image]
 	pull_image(name, image)
-	run(name, image, data[:cmdline])
+	run(name, image, data[:cmdline], data[:env])
 end
