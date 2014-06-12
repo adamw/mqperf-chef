@@ -1,0 +1,1 @@
+pull_and_run_app(:mongo)
