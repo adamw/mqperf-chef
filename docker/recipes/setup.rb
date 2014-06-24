@@ -1,4 +1,4 @@
 package "docker" do  
-  package_name "lxc-docker-0.11.1"
+  package_name "lxc-docker-1.0.1"
   action :install
 end  
