@@ -5,4 +5,6 @@ directory "/mnt/rabbit" do
 	action :create
 end
 
-pull_and_run_app(:rabbit)
+apt_package "rabbitmq-server" do
+	action :install
+end
